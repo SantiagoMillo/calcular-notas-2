@@ -88,6 +88,10 @@ class MainActivity : AppCompatActivity() {
                     instrucciones.text = "Digite la nota:"
                     contador.text = "$porcentaje%"
 
+                    if(porcentaje == 100){
+                        finishButton.isEnabled = true
+                    }
+
                 }else {
                     instrucciones.text = "Digite un porcentaje valido:"
                     return
@@ -132,13 +136,17 @@ class MainActivity : AppCompatActivity() {
         }
     fun mostrarDatos() {
 
+        if(!listaEstudiantes.contains(estudianteActual)){
+            listaEstudiantes.add(estudianteActual)
+        }
+
 
         title.text = "Su resultado final es:"
         mostrarNombre.text = estudianteActual.nombre
         instrucciones.text = "Nota: " + estudianteActual.notaFinalR()
         mostrarP.text = "Promedio : " + estudianteActual.promedio()
 
-        if(reset == 1){
+        if(reset >= 1){
             proceso = 0
             porcentaje = 0
             estudianteActual.nombre = ""
@@ -149,6 +157,7 @@ class MainActivity : AppCompatActivity() {
             mostrarNombre.text = ""
             contador.text = "0%"
             mostrarP.text = ""
+            finishButton.isEnabled = false
         }
 
         reset++
@@ -174,18 +183,11 @@ class Estudiante() {
 
         for (p in notas){
 
-            resultado2 += (p + notas [division]) / division
-            division++
+            resultado2 += p
+
         }
 
-
-
-
-
-
-
-
-        return resultado2
+        return resultado2 / notas.size
 
     }
 
